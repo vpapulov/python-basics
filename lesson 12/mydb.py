@@ -1,8 +1,9 @@
 from tortoise import Tortoise, run_async, fields
 from tortoise.models import Model
 
+
 class User(Model):
-    id = fields.IntField(pk=True,)
+    id = fields.IntField(pk=True, )
     name = fields.TextField()
     gender = fields.TextField()
     age = fields.IntField()
@@ -18,7 +19,3 @@ async def init():
     )
     # Generate the schema
     await Tortoise.generate_schemas()
-
-# async def free_res():
-#     Tortoise.
-
