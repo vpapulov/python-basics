@@ -15,7 +15,7 @@ async def get_data(numberOfTries):
     async with ClientSession() as session:
         for index in range(numberOfTries):
             dataRaw = await get_json(session, API_URL)
-            if dataRaw == None:
+            if dataRaw is None:
                 continue
             data = dataRaw['results'][0]
             createdUser = mydb.User(
