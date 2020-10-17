@@ -10,6 +10,21 @@ class User(Model):
     email = fields.TextField()
 
 
+class Post(Model):
+    id = fields.IntField(pk=True, )
+    userId = fields.IntField()
+    title = fields.TextField()
+    body = fields.TextField()
+
+
+class Comment(Model):
+    id = fields.IntField(pk=True, )
+    postId = fields.IntField()
+    name = fields.TextField()
+    email = fields.TextField()
+    body = fields.TextField()
+
+
 async def init():
     # Here we connect to a SQLite DB file.
     # also specify the app name of "models"
