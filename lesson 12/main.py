@@ -10,33 +10,26 @@ async def get_json(session, url):
         return await response.json() if response.status == 200 else None
 
 
-async def get_data(numberOfTries):
+async def get_users(session, number_of_tries):
+    for index in range(1, number_of_tries + 1):
+        data = await get_json(session, "https://jsonplaceholder.typicode.com/users/" + str(index))
+        print(data)
+        if data is None:
+            continue
+        created_user = mydb.User(
+            id=data['id'],
+            name=data['name'],
+            username=data['username'],
+            phone=data['phone'],
+            email=data['email'])
+        await created_user.save()
+
+
+async def get_data():
     await mydb.init()
     async with ClientSession() as session:
-        for index in range(numberOfTries):
-            dataRaw = await get_json(session, API_URL)
-            if dataRaw is None:
-                continue
-            data = dataRaw['results'][0]
-            createdUser = mydb.User(
-                name=(data['name']['first'] + ' ' + data['name']['last']),
-                gender=data['gender'],
-                age=data['dob']['age'])
-            await createdUser.save()
+        await get_users(session, 10)
 
 
 if __name__ == '__main__':
-    run_async(get_data(10))
-
-    # # 'https://jsonplaceholder.typicode.com/posts/1'
-    # # 'https://randomuser.me/api/'
-    # done_tasks, pending_tasks = await asyncio.wait([
-    #     get_json('https://randomuser.me/api/'),
-    #     get_json('https://jsonplaceholder.typicode.com/posts/1'),
-    # ])
-    #
-    # for task in done_tasks:
-    #     data = task.result()
-    #     break
-    # else:
-    #     data = None
+    run_async(get_data())

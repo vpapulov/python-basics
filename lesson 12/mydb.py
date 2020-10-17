@@ -5,8 +5,9 @@ from tortoise.models import Model
 class User(Model):
     id = fields.IntField(pk=True, )
     name = fields.TextField()
-    gender = fields.TextField()
-    age = fields.IntField()
+    username = fields.TextField()
+    phone = fields.TextField()
+    email = fields.TextField()
 
 
 async def init():
