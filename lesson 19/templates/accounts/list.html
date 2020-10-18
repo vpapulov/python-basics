@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title -%}
+Кошельки
+{%- endblock %}
+
+{% block body %}
+<h1>Кошельки:</h1>
+<div>
+    {{accounts}}
+    <ul>
+        {% for account_id in accounts %}
+        <li>
+            <a href="{{ url_for('account_app.detail', id=account_id) }}">
+                {{accounts[account_id]}}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

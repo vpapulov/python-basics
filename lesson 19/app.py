@@ -1,14 +1,11 @@
-from flask import Flask, request
+from flask import Flask
+
+from views import account_app
 
 app = Flask(__name__)
+app.register_blueprint(account_app, url_prefix='/accounts')
 
 @app.route("/", methods=['GET'])
 def index():
-    return "<h1>Учет денеждных средств</h1>"
+    return "<h1>Учет денежных средств</h1>"
 
-@app.route("/account/<string:name>", methods=['GET'])
-@app.route("/account/<int:id>", methods=['GET'])
-def account(id = None, name = None):
-    # TODO проверить существование кошелька с данным id/name
-    print(request, id, name)
-    return f"<h1>Кошелек {id}</h1>"
