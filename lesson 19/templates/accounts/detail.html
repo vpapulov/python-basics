@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 
 {% block title -%}
-Кошелек
+Мои деньги: Кошелек "{{account_name}}"
 {%- endblock %}
 
 {% block body %}
 <h1>Кошелек "{{account_name}}"</h1>
 <hr>
-<a href="{{ url_for('account_app.list') }}">Вернуться к списку</a>
+<a href="{{ url_for('accounts_app.list') }}">Вернуться к списку</a>
+{% endblock %}
+
+{% block body_bottom %}
+<script>
+    $(function () {
+        console.log('ready!');
+    })
+</script>
 {% endblock %}

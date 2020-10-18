@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title -%}
-Кошельки
+Мои деньги: Кошельки
 {%- endblock %}
 
 {% block body %}
 <h1>Кошельки:</h1>
-<div>
-    {{accounts}}
-    <ul>
-        {% for account_id in accounts %}
-        <li>
-            <a href="{{ url_for('account_app.detail', id=account_id) }}">
-                {{accounts[account_id]}}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
+<div class="row">
+    <div class="col col-4">
+        <ul class="list-group">
+            {% for account_id in accounts %}
+            <li class="list-group-item">
+                <a href="{{ url_for('accounts_app.detail', id=account_id) }}">
+                    {{accounts[account_id]}}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 {% endblock %}

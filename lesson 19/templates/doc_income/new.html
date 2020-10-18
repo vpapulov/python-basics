@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title -%}
+Создать поступление денег
+{%- endblock %}
+
+{% block body %}
+<h1>Создать поступление денег</h1>
+<hr>
+<button id="doc-income-new-btn" class="btn btn-danger btn-lg">СОЗДАТЬ</button>
+{% endblock %}
+
+{% block body_bottom %}
+<script>
+    $(function () {
+        $('#doc-income-new-btn').click(function () {
+            $.ajax({
+                method: 'POST',
+                success: function (res) {
+                    console.log(res);
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+                // complete: function () {
+                //     window.location = '{{ url_for('accounts_app.list') }}'
+                // }
+            })
+        })
+    })
+</script>
+{% endblock %}

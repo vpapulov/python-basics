@@ -1,0 +1,29 @@
+from flask import Blueprint, request, render_template, jsonify
+
+doc_income_app = Blueprint("doc_income_app", __name__)
+
+
+@doc_income_app.route("/", methods=['GET'])
+def list():
+    # return render_template('accounts/list.html', accounts=ACCOUNTS)
+    pass
+
+
+@doc_income_app.route("new", methods=['GET', 'POST'])
+def new():
+    if request.method == 'GET':
+        return render_template('doc_income/new.html')
+    else:
+        # TODO создать документ
+        return jsonify(ok=True)
+
+@doc_income_app.route("/<int:id>", methods=['GET'])
+def detail(id=None, name=None):
+    # TODO проверить существование документа с данным id
+    # name = ACCOUNTS[id]
+    # return render_template(
+    #     'accounts/detail.html',
+    #     account_id=id,
+    #     account_name=name
+    # )
+    pass
