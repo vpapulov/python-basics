@@ -7,7 +7,7 @@
 {% block body %}
 <h1>Создать поступление денег</h1>
 <hr>
-<button id="doc-income-new-btn" class="btn btn-danger btn-lg">СОЗДАТЬ</button>
+<button id="doc-income-new-btn" class="btn btn-primary btn-lg">СОЗДАТЬ</button>
 {% endblock %}
 
 {% block body_bottom %}
@@ -16,6 +16,10 @@
         $('#doc-income-new-btn').click(function () {
             $.ajax({
                 method: 'POST',
+                data: {
+                    account_id: 1,
+                    sum: 123.45
+                },
                 success: function (res) {
                     console.log(res);
                 },
