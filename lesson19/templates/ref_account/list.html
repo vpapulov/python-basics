@@ -9,10 +9,10 @@
 <div class="row">
     <div class="col col-4">
         <ul class="list-group">
-            {% for account_id in accounts %}
+            {% for row in list %}
             <li class="list-group-item">
-                <a href="{{ url_for('accounts_app.detail', id=account_id) }}">
-                    {{accounts[account_id]}}
+                <a href="{{ url_for('ref_account_app.detail', id=row['id']) }}">
+                    {{row['name']}}
                 </a>
             </li>
             {% endfor %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title -%}
+Мои деньги: Кошелек "{{ item['name'] }}"
+{%- endblock %}
+
+{% block body %}
+<h1>Кошелек "{{ item['name'] }}"</h1>
+<hr>
+<div>
+   <label for="name">Название:</label>
+   <input type="text" maxlength="100" id="name" placeholder="Введите название">
+</div>
+<button id="edit-btn" class="btn btn-primary btn-lg">ОБНОВИТЬ</button>
+<br>
+<a href="{{ url_for('ref_account_app.list') }}">Вернуться к списку</a>
+{% endblock %}
+
+{% block body_bottom %}
+<script>
+    $(function () {
+        $('#name').val("{{ item['name'] }}");
+        $('#edit-btn').click(function () {
+            $.ajax({
+                method: 'POST',
+                data: {
+                    name: $('#name').val()
+                },
+                complete: function () {
+                  window.location = '{{ url_for('ref_account_app.list') }}'
+                }
+            })
+        });
+    })
+</script>
+{% endblock %}
