@@ -1,3 +1,6 @@
+# docker build . -t money
+# docker run -p 5000:5000 money
+
 FROM python:3.7.9-buster
 
 WORKDIR /app
@@ -14,3 +17,5 @@ RUN poetry install --no-interaction --no-ansi
 COPY money .
 
 CMD ["python", "main.py"]
+
+EXPOSE 5000
