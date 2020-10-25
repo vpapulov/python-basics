@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title -%}
+Мои деньги: Кошельки
+{%- endblock %}
+
+{% block body %}
+<h1>Кошельки:</h1>
+<a class="btn btn-primary btn-lg btn-block" id="new-btn" href="{{ url_for('ref_account_app.new') }}">Добавить</a>
+
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Наименование</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in list %}
+            <tr>
+                <td><a href="{{ url_for('ref_account_app.detail', id=row['id']) }}">Изменить</a></td>
+                <td>{{ row['name'] }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

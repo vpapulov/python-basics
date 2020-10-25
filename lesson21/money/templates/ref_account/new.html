@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title -%}
+Новый кошелек
+{%- endblock %}
+
+{% block body %}
+<h1>Создать кошелек</h1>
+<hr>
+<div>
+   <label for="name">Название:</label>
+   <input type="text" maxlength="100" id="name" placeholder="Введите название">
+</div>
+
+<button id="new-btn" class="btn btn-primary btn-lg">СОЗДАТЬ</button>
+{% endblock %}
+
+{% block body_bottom %}
+<script>
+    $(function () {
+        $('#new-btn').click(function () {
+            $.ajax({
+                method: 'POST',
+                data: {
+                    name: $('#name').val()
+                },
+                complete: function () {
+                  window.location = '{{ url_for('ref_account_app.list') }}'
+                }
+            })
+        })
+    })
+</script>
+{% endblock %}
