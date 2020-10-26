@@ -1,19 +1,22 @@
-from flask import Blueprint, render_template, request, url_for, redirect, jsonify
+from flask import Blueprint, render_template, request, jsonify
+from werkzeug.exceptions import BadRequest
 
-from db import session, RefAccount
+from models import db, RefAccount
 
 ref_account_app = Blueprint("ref_account_app", __name__)
 
 
 @ref_account_app.route("/", methods=['GET'])
 def list():
-    list = session.query(RefAccount).all()
+    list = RefAccount.query.order_by(RefAccount.name).all()
     return render_template('ref_account/list.html', list=list)
 
 
-@ref_account_app.route("/<int:id>", methods=['GET', 'POST'])
-def detail(id):
-    item = session.query(RefAccount).filter_by(id=id).one()
+@ref_account_app.route("/<int:item_id>", methods=['GET', 'POST'])
+def detail(item_id):
+    item = RefAccount.query.filter_by(id=item_id).one_or_none()
+    if item is None:
+        raise BadRequest(f"Invalid id #{item_id}")
     if request.method == 'GET':
         return render_template(
             'ref_account/detail.html',
@@ -21,19 +24,19 @@ def detail(id):
         )
     elif request.method == 'POST':
         item.name = request.values['name']
-        session.add(item)
-        session.commit()
+        db.session.add(item)
+        db.session.commit()
         return jsonify(ok=True)
 
 
 @ref_account_app.route("new", methods=['GET', 'POST'])
 def new():
     if request.method == 'GET':
-        return render_template('ref_account/new.html')
+        return render_template('ref_account/detail.html', is_new=True)
     elif request.method == 'POST':
         new_item = RefAccount(
             name=request.values['name']
         )
-        session.add(new_item)
-        session.commit()
+        db.session.add(new_item)
+        db.session.commit()
         return jsonify(ok=True)

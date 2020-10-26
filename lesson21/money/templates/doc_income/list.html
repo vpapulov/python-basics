@@ -22,7 +22,7 @@
             <tbody>
             {% for row in data %}
             <tr>
-                <td><a href="{{ url_for('doc_income_app.detail', id=row['id']) }}">Изменить</a></td>
+                <td><a href="{{ url_for('doc_income_app.detail', doc_id=row['id']) }}">Изменить</a></td>
                 <td>{{ row['date'].strftime('%d.%m.%Y') }}</td>
                 <td>{{ row['account']['name'] }}</td>
                 <td>{{ row['sum'] }}</td>

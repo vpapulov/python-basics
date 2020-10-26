@@ -1,36 +1,61 @@
 {% extends 'base.html' %}
 
 {% block title -%}
-Мои деньги: Кошелек "{{ item['name'] }}"
+    {% if is_new %}
+        Создать кошелек
+    {% else %}
+        Мои деньги: Кошелек "{{ item['name'] }}"
+    {% endif %}
 {%- endblock %}
 
 {% block body %}
-<h1>Кошелек "{{ item['name'] }}"</h1>
-<hr>
-<div>
-   <label for="name">Название:</label>
-   <input type="text" maxlength="100" id="name" placeholder="Введите название">
-</div>
-<button id="edit-btn" class="btn btn-primary btn-lg">ОБНОВИТЬ</button>
-<br>
-<a href="{{ url_for('ref_account_app.list') }}">Вернуться к списку</a>
+    <h1>
+        {% if is_new %}
+            Создать кошелек
+        {% else %}
+            Кошелек "{{ item['name'] }}"
+        {% endif %}
+    </h1>
+    <hr>
+    <div>
+        <label for="name">Название:</label>
+        <input type="text" maxlength="100" id="name" placeholder="Введите название">
+    </div>
+    {% if is_new %}
+        <button id="new-edit-btn" class="btn btn-primary btn-lg">СОЗДАТЬ</button>
+    {% else %}
+        <button id="new-edit-btn" class="btn btn-primary btn-lg">ОБНОВИТЬ</button>
+    {% endif %}
+    <br>
+    <a href="{{ url_for('ref_account_app.list') }}">
+        {% if is_new %}
+            Отмена
+        {% else %}
+            Вернуться к списку
+        {% endif %}
+    </a>
+    <div style="display:none" id="error-block" class="alert alert-danger" role="alert">
+        НА СЕРВЕРЕ ВОЗНИКЛА ОШИБКА, МНЕ ОЧЕНЬ ЖАЛЬ
+    </div>
 {% endblock %}
 
 {% block body_bottom %}
-<script>
-    $(function () {
-        $('#name').val("{{ item['name'] }}");
-        $('#edit-btn').click(function () {
-            $.ajax({
-                method: 'POST',
-                data: {
-                    name: $('#name').val()
-                },
-                complete: function () {
-                  window.location = '{{ url_for('ref_account_app.list') }}'
-                }
-            })
-        });
-    })
-</script>
+    <script>
+        $(function () {
+            {% if not is_new %}
+                $('#name').val("{{ item['name'] }}");
+            {% endif %}
+            $('#new-edit-btn').click(function () {
+                $.ajax({
+                    method: 'POST',
+                    data: {
+                        name: $('#name').val()
+                    },
+                    complete: function () {
+                        window.location = '{{ url_for('ref_account_app.list') }}'
+                    }
+                })
+            });
+        })
+    </script>
 {% endblock %}

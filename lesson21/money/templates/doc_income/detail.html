@@ -1,86 +1,90 @@
 {% extends 'base.html' %}
 
 {% block title -%}
-{% if is_new %}
-Создать поступление
-{% else %}
-Мои деньги: Документ "{{ doc['date'] }}"
-{% endif %}
+    {% if is_new %}
+        Создать поступление
+    {% else %}
+        Мои деньги: Документ "{{ doc['date'] }}"
+    {% endif %}
 {%- endblock %}
 
 {% block body %}
-<h1>
-    {% if is_new %}
-    Создать поступление
-    {% else %}
-    Поступление {{ doc['date'] }}
-    {% endif %}
-</h1>
-<hr>
-<form>
-    <form class="form-group">
-        <label for="date">Дата:</label>
-        <input type="date" class="form-control" id="date">
-        <br>
-        <label for="account">Кошелек:</label>
-        <input type="text" class="form-control" id="account">
-        <br>
-        <label for="sum">Сумма:</label>
-        <input type="text" class="form-control" id="sum">
-        <br>
-        <label for="comment">Комментарий:</label>
-        <input type="text" class="form-control" id="comment" maxlength="100">
+    <h1>
+        {% if is_new %}
+            Создать поступление
+        {% else %}
+            Поступление {{ doc['date'] }}
+        {% endif %}
+    </h1>
+    <hr>
+    <form>
+        <form class="form-group">
+            <label for="date">Дата:</label>
+            <input type="date" class="form-control" id="date">
+            <br>
+            <label for="account">Кошелек:</label>
+            <select class="form-control" id="account">
+                {% for row in account_list %}
+                    <option value={{ row['id'] }}>{{ row['name'] }}</option>
+                {% endfor %}
+            </select>
+            {#        <input type="text" class="form-control" id="account">#}
+            <br>
+            <label for="sum">Сумма:</label>
+            <input type="text" class="form-control" id="sum">
+            <br>
+            <label for="comment">Комментарий:</label>
+            <input type="text" class="form-control" id="comment" maxlength="100">
+        </form>
     </form>
-</form>
-{% if is_new %}
-<button id="new-edit-btn" class="btn btn-primary btn-lg">СОЗДАТЬ</button>
-{% else %}
-<button id="new-edit-btn" class="btn btn-primary btn-lg">ОБНОВИТЬ</button>
-{% endif %}
-
-<a href="{{ url_for('doc_income_app.list') }}">
     {% if is_new %}
-    Отмена
+        <button id="new-edit-btn" class="btn btn-primary btn-lg">СОЗДАТЬ</button>
     {% else %}
-    Вернуться к списку
+        <button id="new-edit-btn" class="btn btn-primary btn-lg">ОБНОВИТЬ</button>
     {% endif %}
-</a>
-
-<div style="display:none" id="error-block" class="alert alert-danger" role="alert">
-    НА СЕРВЕРЕ ВОЗНИКЛА ОШИБКА, МНЕ ОЧЕНЬ ЖАЛЬ
-</div>
+    <br>
+    <a href="{{ url_for('doc_income_app.list') }}">
+        {% if is_new %}
+            Отмена
+        {% else %}
+            Вернуться к списку
+        {% endif %}
+    </a>
+    <div style="display:none" id="error-block" class="alert alert-danger" role="alert">
+        НА СЕРВЕРЕ ВОЗНИКЛА ОШИБКА, МНЕ ОЧЕНЬ ЖАЛЬ
+    </div>
 {% endblock %}
 
 {% block body_bottom %}
-<script>
-    $(function () {
-        // on load
-        {% if is_new %}
-        $('#date').val((new Date()).toISOString().substring(0,10));
-        {% else %}
-        $('#date').val("{{ doc['date'] }}".substring(0, 10));
-        $('#account').val("{{ doc['account_id'] }}");
-        $('#sum').val("{{ doc['sum'] }}");
-        $('#comment').val("{{ doc['comment'] }}");
-        {% endif %}
+    <script>
+        $(function () {
+            // on load
+            {% if is_new %}
+                $('#date').val((new Date()).toISOString().substring(0, 10));
+            {% else %}
+                $('#date').val("{{ doc['date'] }}".substring(0, 10));
+                $('#account').val("{{ doc['account_id'] }}");
+                $('#sum').val("{{ doc['sum'] }}");
+                $('#comment').val("{{ doc['comment'] }}");
+            {% endif %}
 
-        $('#new-edit-btn').click(function () {
-            $.ajax({
-                method: 'POST',
-                data: {
-                    date: $('#date').val(),
-                    account_id: $('#account').val(),
-                    sum: $('#sum').val(),
-                    comment: $('#comment').val()
-                },
-                error: function (err) {
-                    $('#error-block').show();
-                },
-                success: function () {
-                    window.location = "{{ url_for('doc_income_app.list') }}"
-                }
+            $('#new-edit-btn').click(function () {
+                $.ajax({
+                    method: 'POST',
+                    data: {
+                        date: $('#date').val(),
+                        account_id: $('#account').val(),
+                        sum: $('#sum').val(),
+                        comment: $('#comment').val()
+                    },
+                    error: function (err) {
+                        $('#error-block').show();
+                    },
+                    success: function () {
+                        window.location = "{{ url_for('doc_income_app.list') }}"
+                    }
+                })
             })
         })
-    })
-</script>
+    </script>
 {% endblock %}
