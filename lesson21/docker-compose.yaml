@@ -7,6 +7,8 @@ services:
       context: .
     environment:
       PG_HOST: pg
+      PG_USER: "${PG_USER}"
+      PG_PWD: "${PG_PWD}"
     volumes:
     - ./money:/app
     ports:
@@ -17,8 +19,8 @@ services:
   pg:
     image: postgres:12
     environment:
-      POSTGRES_DB: money
-      POSTGRES_USER: user
+      POSTGRES_DB: money2222
+      POSTGRES_USER: user1
       POSTGRES_PASSWORD: pass
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
