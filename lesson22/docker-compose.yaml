@@ -1,0 +1,14 @@
+version: "3.5"
+
+services:
+  pg:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: dengi
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pwdpwd
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
