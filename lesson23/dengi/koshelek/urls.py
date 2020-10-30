@@ -6,5 +6,5 @@ app_name = 'koshelek'
 
 urlpatterns = [
     path('', index_view, name='index'),
-    path('income', money_income_list_view, name='index'),
+    path('income/', money_income_list_view, name='index'),
 ]

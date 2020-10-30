@@ -5,7 +5,7 @@ class Reference(models.Model):
     name = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    deleted = models.BooleanField()
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
@@ -14,15 +14,13 @@ class Reference(models.Model):
 class Document(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     number = models.PositiveIntegerField()
-    deleted = models.BooleanField()
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
 
 
 class Account(Reference):
-    pass
-
     class Meta:
         verbose_name = "Кошелек"
         verbose_name_plural = "Кошельки"
