@@ -5,8 +5,8 @@ services:
     image: postgres:12
     environment:
       POSTGRES_DB: dengi
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pwdpwd
+      POSTGRES_USER: "${PG_USER}"
+      POSTGRES_PASSWORD: "${PG_PWD}"
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./pgdata:/var/lib/postgresql/data/pgdata
