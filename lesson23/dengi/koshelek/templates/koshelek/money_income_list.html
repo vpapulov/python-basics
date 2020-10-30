@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Деньги</title>
+</head>
+<body>
+    <h1>Документы "Поступление денег"</h1>
+
+    <ul>
+        {% for doc in docs %}
+            <li>{{ doc.date }} {{ doc.number }}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

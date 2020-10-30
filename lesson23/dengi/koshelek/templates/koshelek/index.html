@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Деньги</title>
+</head>
+<body>
+    <h1>Мои кошельки</h1>
+
+    <ul>
+        {% for account in accounts %}
+            <li>{{account.name}}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
