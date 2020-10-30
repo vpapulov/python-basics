@@ -1,7 +1,6 @@
 .idea/
 */venv/
 */data/
-lesson22/pgdata/
-lesson23/pgdata/
+*/pgdata/
 *.pyc
 .env
