@@ -9,5 +9,5 @@
 <p>Имя: {{ object.name }}</p>
 <p>Создано: {{ object.created|date }}</p>
 <p>Обновлено: {{ object.updated|date }}</p>
-<a class="btn btn-lg btn-primary" href="list.html">Вернуться к списку</a>
+<a class="btn btn-lg btn-primary" href="{% url 'accounts:account-list' %}">Вернуться к списку</a>
 {% endblock %}
