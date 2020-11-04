@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}
+Кошельки
+{% endblock %}
+
+{% block main %}
+<h1>{{ object.name }}</h1>
+<p>{{ object.name }}</p>
+<p>Имя: {{ object.name }}</p>
+<p>Создано: {{ object.created|date }}</p>
+<p>Обновлено: {{ object.updated|date }}</p>
+<a class="btn btn-lg btn-primary" href="list.html">Вернуться к списку</a>
+{% endblock %}

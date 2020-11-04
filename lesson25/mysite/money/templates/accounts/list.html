@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+Главная
+{% endblock %}
+
+{% block main %}
+<h1>Деньги</h1>
+<ul class="list-group">
+    {% for item in object_list %}
+    <li class="list-group-item">
+        <a href="{% url 'account-detail' item.id %}">{{ item.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

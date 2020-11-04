@@ -1,7 +1,9 @@
 .idea/
 */venv/
 */data/
-*/pgdata/
+**/pgdata/
 *.pyc
 .env
 settings_local.py
+**/static/css/
+**/static/js/
