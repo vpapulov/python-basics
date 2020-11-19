@@ -15,7 +15,6 @@ class AccountListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['my_var'] = '123'
         return context
 
 

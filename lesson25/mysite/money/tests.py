@@ -20,34 +20,31 @@ class TestAccount(TestCase):
 class TestViews(TestCase):
     def setUp(self):
         self.client = Client()
-        self.ADMIN_PASS = 'admin123'
-        self.admin = User.objects.create_superuser('admin', 'admin@test.com', self.ADMIN_PASS)
-        self.STAFF_PASS = 'staff123'
-        self.staff = User.objects.create_user('staff', 'staff@test.com', self.STAFF_PASS, is_staff=True)
-        self.USER_PASS = 'user123'
-        self.user = User.objects.create_user('user', 'user@test.com', self.USER_PASS)
+        self.admin = User.objects.create_superuser('admin', 'admin@test.com', 'admin123')
+        self.staff = User.objects.create_user('staff', 'staff@test.com', 'staff123', is_staff=True)
+        self.user = User.objects.create_user('user', 'user@test.com', 'user123')
 
     def test_create_account(self):
         response = self.client.get('/accounts/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['my_var'], '123')
+        self.assertIsNotNone(response.context['object_list'])
 
     def test_rights(self):
         # anonymous should have no access
         response = self.client.get('/accounts/create/')
         self.assertEqual(response.status_code, 302)
         # admin access
-        self.client.login(username='admin', password=self.ADMIN_PASS)
+        self.client.force_login(self.admin)
         response = self.client.get('/accounts/create/')
         self.assertEqual(response.status_code, 200)
         self.client.logout()
         # staff access
-        self.client.login(username='staff', password=self.STAFF_PASS)
+        self.client.force_login(self.staff)
         response = self.client.get('/accounts/create/')
         self.assertEqual(response.status_code, 200)
         self.client.logout()
         # user should have np access
-        self.client.login(username='user', password=self.USER_PASS)
+        self.client.force_login(self.user)
         response = self.client.get('/accounts/create/')
         self.assertEqual(response.status_code, 403)
         self.client.logout()
